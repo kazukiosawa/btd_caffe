@@ -1,9 +1,9 @@
 # btd_caffe
 
-## BTD for CNN
+## Block Term Decomposition (BTD) for CNNs
 - [Accelerating Convolutional Neural Networks for Mobile Applications](http://dl.acm.org/citation.cfm?id=2967280)
 - 2016, ACM Multimedia
-- Peisong Wang, 	Jian Cheng / 	Chinese Academy of Sciences & University of Chinese Academy of Sciences, Beijing, China
+- Peisong Wang and Jian Cheng / Chinese Academy of Sciences & University of Chinese Academy of Sciences, Beijing, China
 - Parameters for '3.2 Whole-Model Acceleration for VGG-16’ in ‘3. EXPERIMENTS’
   >The S', T' and R for conv1_2 to conv5_3 are as follows:  
   >conv1_2: 11, 18, 1  
@@ -26,13 +26,20 @@ $ ./start.sh
 ## start.sh に記述するパラメータ
 | 名前 | 説明 |
 | :-- | :-- |
-|CAFFE_MODEL_ROOT | Caffeモデルを管理しているディレクトリ |
-| MODEL_ROOT | オリジナルモデルのディレクトリ |
 | ORIGINAL_DEPLOY | オリジナルモデル (deploy.prototxt)|
-| ORIGINAL_MODEL | オリジナルモデル (caffemodel) |
-| TEMPLATE_DEPLOY | BTD適用後のテンプレート (deploy.prototxt) |
-| TEMPLATE_TRAIN_TEST | BTD適用後のテンプレート (train_test.prototxt) |
+| ORIGINAL_MODEL | オリジナルモデル (.caffemodel) |
+| TEMPLATE_DEPLOY | 低ランクモデルのテンプレート (deploy.prototxt) |
+| TEMPLATE_TRAIN_TEST | 低ランクモデルのテンプレート (train_test.prototxt) |
 | LOWRANK_DEPLOY | 低ランクモデル (deploy.prototxt) |
 | LOWRANK_TRAIN_TEST | 低ランクモデル (train_test.prototxt) |
-| LOWRANK_MODEL | 低ランクモデル (caffemodel)|
-| CONFIG | BTD用パラメータ設定ファイル|
+| LOWRANK_MODEL | 低ランクモデル (.caffemodel)|
+| CONFIG | BTD用パラメータ設定ファイル (.csv)|
+
+## BTD用パラメータ設定ファイル（.csv）
+```
+conv, S', T', R
+```
+- conv : prototxt内の"Convolution"layerの名前
+- S' : 入力チャネル数
+- T' : 出力チャネル数
+- R  : ブロック数
