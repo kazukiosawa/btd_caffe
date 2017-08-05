@@ -49,13 +49,14 @@ with open(config, 'r') as f:
 def modify_convolution_num_output(new_proto, params):
 	layer_names = [l.name for l in new_proto.layer]
 	for conv, values in params.items():
-		c, n, _ = values
+		c, n, blocks = values
 		idx = layer_names.index(conv + 'a')
 		l = new_proto.layer[idx]
 		l.convolution_param.num_output = c
 		idx = layer_names.index(conv + 'b')
 		l = new_proto.layer[idx]
 		l.convolution_param.num_output = n
+		l.convolution_param.group = blocks
 
 modify_convolution_num_output(new_deploy, params)
 modify_convolution_num_output(new_train_test, params)
@@ -81,7 +82,7 @@ for name in exclude:
 convs = [(k, v[0].data) for k, v in net.params.items() if 'conv' in k and not k in exclude]
 for conv, kernel in convs:
 	size = kernel.shape
-	N,C,H,W = size[0:4]
+	N, C, H, W = size[0:4]
 	P = H * W
 	c, n, blocks = params[conv]
 	# (N, C, H, W) -> (N, C, P)
