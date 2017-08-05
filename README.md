@@ -18,6 +18,9 @@
   >conv5_1: 224, 224, 4  
   >conv5_2: 224, 224, 4  
   >conv5_3: 224, 224, 4  
+- 'group' parameter is used in 'convolution_param' in Caffe network definition (.prototxt)
+  - description of 'group' in [Caffe Tutorial for Convolution Layer](http://caffe.berkeleyvision.org/tutorial/layers/convolution.html)
+  >group (g) [default 1]: If g > 1, we restrict the connectivity of each filter to a subset of the input. Specifically, the input and output channels are separated into g groups, and the iith output group channels will be only connected to the iith input group channels.
 
 ## Usage
 ```sh
