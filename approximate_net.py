@@ -94,17 +94,14 @@ for conv, kernel in convs:
 	print ('calculating BTD for {0}...').format(conv)
         btd, _ = pci(dtensor(kernel), blocks, rank, max_iter, min_decrease) 
 	print ('finished.')
-	# BTD -> (c, C) (n, c, P) (N, n)
+	# BTD -> (c, C) (n, c/blocks, P) (N, n)
 	kernel_a = np.c_[[subtensor[1][1] for subtensor in btd]]
-	kernel_b = np.zeros((n, c, P))
-	for (i, subtensor) in enumerate(btd):
-		core = subtensor[0]
-		kernel_b[i*n_:(i+1)*n_, i*c_:(i+1)*c_, :] = core
+	kernel_b = np.r_[[subtensor[0] for subtensor in btd]]
 	kernel_c = np.r_[[subtensor[1][0] for subtensor in btd]]
 	# (c, C) -> (c, C, 1, 1)
 	kernel_a = kernel_a.reshape(c, C, 1, 1)
-	# (n, c, P) -> (n, c, H, W)
-	kernel_b = kernel_b.reshape(n, c, H, W)
+	# (n, c/blocks, P) -> (n, c/blocks, H, W)
+	kernel_b = kernel_b.reshape(n, c_, H, W)
 	# (N, n) -> (N, n, 1, 1)
 	kernel_c = kernel_c.reshape(N, n, 1, 1)
 	# set kernel to low-rank model
