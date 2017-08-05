@@ -41,14 +41,17 @@ with open(template_train_test) as f:
 	s = f.read()
 	txtf.Merge(s, new_train_test)
 
-# load ranks for low-rank approximation
+# load parameters for btd
+btd_params = {}
 with open(config, 'r') as f:
 	reader = csv.reader(f)
-	params = {row[0]:(int(row[1]), int(row[2]), int(row[3])) for row in reader}
+	for row in reader:
+		param, c, n, blocks = row[0], int(row[1]), int(row[2]), int(row[3])
+		btd_params[param] = (c, n, blocks)
 
-def modify_convolution_num_output(new_proto, params):
+def modify_convolution_num_output(new_proto, btd_params):
 	layer_names = [l.name for l in new_proto.layer]
-	for conv, values in params.items():
+	for conv, values in btd_params.items():
 		c, n, blocks = values
 		idx = layer_names.index(conv + 'a')
 		l = new_proto.layer[idx]
@@ -58,8 +61,8 @@ def modify_convolution_num_output(new_proto, params):
 		l.convolution_param.num_output = n
 		l.convolution_param.group = blocks
 
-modify_convolution_num_output(new_deploy, params)
-modify_convolution_num_output(new_train_test, params)
+modify_convolution_num_output(new_deploy, btd_params)
+modify_convolution_num_output(new_train_test, btd_params)
 
 # save new prototxt
 with open(lowrank_deploy, 'w') as f:
@@ -73,18 +76,18 @@ net_lowrank = caffe.Net(lowrank_deploy, caffe.TEST)
 # load original model
 net = caffe.Net(original_deploy, original_model, caffe.TEST)
 
-# load original params
-exclude = ['conv1_1']
-for name in exclude:
-	net_lowrank.params[name][0].data[...] = net.params[name][0].data
+# copy original params
+copy = [param for param in net.params.keys() if not param in btd_params.keys()]
+for param in copy:
+	net_lowrank.params[param][0].data[...] = net.params[param][0].data
 
 # approximate original params
-convs = [(k, v[0].data) for k, v in net.params.items() if 'conv' in k and not k in exclude]
+convs = [(k, v[0].data) for k, v in net.params.items() if 'conv' in k and not k in copy]
 for conv, kernel in convs:
 	size = kernel.shape
 	N, C, H, W = size[0:4]
 	P = H * W
-	c, n, blocks = params[conv]
+	c, n, blocks = btd_params[conv]
 	# (N, C, H, W) -> (N, C, P)
         kernel = kernel.reshape(N, C, P)	
 	# compute BTD 
