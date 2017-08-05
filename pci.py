@@ -4,7 +4,7 @@ from sktensor import dtensor, tucker
 import numpy as np
 
 
-def pci(T, R, rank, max_iter=1000, min_decrease=1e-3):
+def pci(T, R, rank, max_iter=1000, min_decrease=1e-5):
 	shape = np.array(T).shape
 	dim = range(len(rank))
 	tensors = [dtensor(np.zeros(shape)) for r in range(R)]

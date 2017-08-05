@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import sys
 import numpy as np
 import csv
 import caffe
@@ -8,17 +9,25 @@ import google.protobuf.text_format as txtf
 from pci import pci
 from sktensor import dtensor
 
-caffe_model_root = '/opt/storage/models/caffe'
-model_root = caffe_model_root + '/vgg16'
+args = sys.argv
 
-original_deploy = model_root + '/deploy.prototxt'
-original_model = model_root + '/VGG_ILSVRC_16_layers.caffemodel'
-template_deploy = model_root + '/lowrank/template_deploy.prototxt'
-template_train_test = model_root + '/lowrank/template_train_test.prototxt'
-lowrank_deploy = model_root + '/lowrank/deploy.prototxt'
-lowrank_train_test = model_root + '/lowrank/train_test.prototxt'
-lowrank_model = model_root + '/lowrank/VGG_ILSVRC_16_layers_lowrank.caffemodel'
-params_def = model_root + '/lowrank/params.csv'
+# original model
+original_deploy = args[1]
+original_model = args[2]
+
+# template for low-rank model
+template_deploy = args[3]
+template_train_test = args[4]
+
+# low-rank model
+lowrank_deploy = args[5]
+lowrank_train_test = args[6]
+lowrank_model = args[7]
+config = args[8]
+
+# PCI setting
+max_iter = int(args[9])
+min_decrease = float(args[10])
 
 # create new prototxt
 new_deploy = caffe_pb2.NetParameter()
@@ -33,7 +42,7 @@ with open(template_train_test) as f:
 	txtf.Merge(s, new_train_test)
 
 # load ranks for low-rank approximation
-with open(params_def, 'r') as f:
+with open(config, 'r') as f:
 	reader = csv.reader(f)
 	params = {row[0]:(int(row[1]), int(row[2]), int(row[3])) for row in reader}
 
@@ -82,7 +91,7 @@ for conv, kernel in convs:
 	c_ = int(c/blocks)
 	rank = [n_, c_, P]
 	print ('calculating BTD for {0}...').format(conv)
-        btd, _ = pci(dtensor(kernel), blocks, rank) 
+        btd, _ = pci(dtensor(kernel), blocks, rank, max_iter, min_decrease) 
 	print ('finished.')
 	# BTD -> (c, C) (n, c, P) (N, n)
 	kernel_a = np.c_[[subtensor[1][1] for subtensor in btd]]
