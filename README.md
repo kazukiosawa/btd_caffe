@@ -26,23 +26,23 @@
 ```sh
 $ ./start.sh
 ```
-## start.sh に記述するパラメータ
-| 名前 | 説明 |
+## Parameters for start.sh
+| Name | Description |
 | :-- | :-- |
-| ORIGINAL_DEPLOY | オリジナルモデル (deploy.prototxt)|
-| ORIGINAL_MODEL | オリジナルモデル (.caffemodel) |
-| TEMPLATE_DEPLOY | 低ランクモデルのテンプレート (deploy.prototxt) |
-| TEMPLATE_TRAIN_TEST | 低ランクモデルのテンプレート (train_test.prototxt) |
-| LOWRANK_DEPLOY | 低ランクモデル (deploy.prototxt) |
-| LOWRANK_TRAIN_TEST | 低ランクモデル (train_test.prototxt) |
-| LOWRANK_MODEL | 低ランクモデル (.caffemodel)|
-| CONFIG | BTD用パラメータ設定ファイル (.csv)|
+| ORIGINAL_DEPLOY | original model (deploy.prototxt)|
+| ORIGINAL_MODEL | original model (.caffemodel) |
+| TEMPLATE_DEPLOY | template for low-rank model (deploy.prototxt) |
+| TEMPLATE_TRAIN_TEST | template for low-rank model (train_test.prototxt) |
+| LOWRANK_DEPLOY | low-rank model (deploy.prototxt) |
+| LOWRANK_TRAIN_TEST | low-rank model (train_test.prototxt) |
+| LOWRANK_MODEL | low-rank model (.caffemodel)|
+| CONFIG | parameter config file for BTD (.csv)|
 
-## BTD用パラメータ設定ファイル（.csv）
+## Parameter config file for BTD (.csv)
 ```
 conv, S', T', R
 ```
-- conv : prototxt内の"Convolution"layerの名前
-- S' : 入力チャネル数
-- T' : 出力チャネル数
-- R  : ブロック数
+- conv : name of "Convolution" layer in prototxt
+- S' : # of input channels
+- T' : # of output channels
+- R  : # of blocks
