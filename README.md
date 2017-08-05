@@ -1,4 +1,5 @@
 # btd_caffe
+Block Term Decomposition for Caffe model
 
 ## Block Term Decomposition (BTD) for CNNs
 - [Accelerating Convolutional Neural Networks for Mobile Applications](http://dl.acm.org/citation.cfm?id=2967280)
@@ -27,16 +28,16 @@
 $ ./start.sh
 ```
 ## Parameters for start.sh
-| Name | Description |
-| :-- | :-- |
-| ORIGINAL_DEPLOY | original model (deploy.prototxt)|
-| ORIGINAL_MODEL | original model (.caffemodel) |
-| TEMPLATE_DEPLOY | template for low-rank model (deploy.prototxt) |
-| TEMPLATE_TRAIN_TEST | template for low-rank model (train_test.prototxt) |
-| LOWRANK_DEPLOY | low-rank model (deploy.prototxt) |
-| LOWRANK_TRAIN_TEST | low-rank model (train_test.prototxt) |
-| LOWRANK_MODEL | low-rank model (.caffemodel)|
-| CONFIG | parameter config file for BTD (.csv)|
+| Name | Description | Type |
+| :-- | :-- | :-: |
+| ORIGINAL_DEPLOY | original model (deploy.prototxt)| input |
+| ORIGINAL_MODEL | original model (.caffemodel) | input |
+| TEMPLATE_DEPLOY | template for low-rank model (deploy.prototxt) | input |
+| TEMPLATE_TRAIN_TEST | template for low-rank model (train_test.prototxt) | input |
+| LOWRANK_DEPLOY | low-rank model (deploy.prototxt) | output |
+| LOWRANK_TRAIN_TEST | low-rank model (train_test.prototxt) | output |
+| LOWRANK_MODEL | low-rank model (.caffemodel)| output |
+| CONFIG | parameter config file for BTD (.csv)| input |
 
 ## Parameter config file for BTD (.csv)
 ```
