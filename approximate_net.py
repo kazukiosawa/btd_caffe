@@ -76,14 +76,15 @@ net_lowrank = caffe.Net(lowrank_deploy, caffe.TEST)
 # load original model
 net = caffe.Net(original_deploy, original_model, caffe.TEST)
 
-# copy original params
+# copy original kernels/bias
 copy = [param for param in net.params.keys() if not param in btd_params.keys()]
 for param in copy:
 	net_lowrank.params[param][0].data[...] = net.params[param][0].data
+	net_lowrank.params[param][1].data[...] = net.params[param][1].data
 
-# approximate original params
-convs = [(k, v[0].data) for k, v in net.params.items() if 'conv' in k and not k in copy]
-for conv, kernel in convs:
+# approximate original kernels & copy original bias
+convs = [(k, v[0].data, v[1].data) for k, v in net.params.items() if k in btd_params.keys()]
+for conv, kernel, bias in convs:
 	size = kernel.shape
 	N, C, H, W = size[0:4]
 	P = H * W
@@ -111,6 +112,8 @@ for conv, kernel in convs:
 	net_lowrank.params[conv + 'a'][0].data[...] = kernel_a
 	net_lowrank.params[conv + 'b'][0].data[...] = kernel_b
 	net_lowrank.params[conv + 'c'][0].data[...] = kernel_c
-
+	# copy bias to low-rank model
+	net_lowrank.params[conv + 'c'][1].data[...] = bias
+	
 # save caffemodel of low-rank model
 net_lowrank.save(lowrank_model)
