@@ -53,6 +53,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "relu1_1"
@@ -70,6 +76,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv1_2b"
@@ -81,6 +93,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv1_2c"
@@ -91,6 +109,12 @@ layer {
     num_output: 64
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -120,6 +144,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv2_1b"
@@ -131,6 +161,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv2_1c"
@@ -141,6 +177,12 @@ layer {
     num_output: 128
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -159,6 +201,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv2_2b"
@@ -170,6 +218,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv2_2c"
@@ -180,6 +234,12 @@ layer {
     num_output: 128
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -209,6 +269,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv3_1b"
@@ -220,6 +286,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv3_1c"
@@ -230,6 +302,12 @@ layer {
     num_output: 256
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -248,6 +326,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv3_2b"
@@ -259,6 +343,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv3_2c"
@@ -269,6 +359,12 @@ layer {
     num_output: 256
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -287,6 +383,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv3_3b"
@@ -298,6 +400,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv3_3c"
@@ -308,6 +416,12 @@ layer {
     num_output: 256
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -337,6 +451,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv4_1b"
@@ -348,6 +468,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv4_1c"
@@ -358,6 +484,12 @@ layer {
     num_output: 512
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -376,6 +508,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv4_2b"
@@ -387,6 +525,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv4_2c"
@@ -397,6 +541,12 @@ layer {
     num_output: 512
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -415,6 +565,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv4_3b"
@@ -426,6 +582,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv4_3c"
@@ -436,6 +598,12 @@ layer {
     num_output: 512
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -465,6 +633,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv5_1b"
@@ -476,6 +650,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv5_1c"
@@ -486,6 +666,12 @@ layer {
     num_output: 512
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -504,6 +690,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv5_2b"
@@ -515,6 +707,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv5_2c"
@@ -525,6 +723,12 @@ layer {
     num_output: 512
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -543,6 +747,12 @@ layer {
     pad: 0
     kernel_size: 1
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv5_3b"
@@ -554,6 +764,12 @@ layer {
     pad: 1
     kernel_size: 3
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "conv5_3c"
@@ -564,6 +780,12 @@ layer {
     num_output: 512
     pad: 0
     kernel_size: 1
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
@@ -591,6 +813,12 @@ layer {
   inner_product_param {
     num_output: 4096
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "relu6"
@@ -615,6 +843,12 @@ layer {
   inner_product_param {
     num_output: 4096
   }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
+  }
 }
 layer {
   name: "relu7"
@@ -638,6 +872,12 @@ layer {
   top: "fc8"
   inner_product_param {
     num_output: 1000
+  }
+  param {
+    lr_mult: 0
+  }
+  param {
+    lr_mult: 0
   }
 }
 layer {
