@@ -38,8 +38,7 @@ $ ./approximate_net.py \
          --template_train_test vgg16/lowrank/template_train_test.prototxt
 ```
 
-## Arguments
-| Name | Description | Type |
+| Argument | Description | Type |
 | :-- | :-- | :-: |
 | --model | original model (deploy.prototxt)| input |
 | --weights | original model (.caffemodel) | input |
