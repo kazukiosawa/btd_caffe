@@ -38,18 +38,18 @@ $ ./approximate_net.py \
          --template_train_test vgg16/lowrank/template_train_test.prototxt
 ```
 
-| Argument | Description | Type |
-| :-- | :-- | :-: |
-| --model | original model (deploy.prototxt)| input |
-| --weights | original model (.caffemodel) | input |
-| --save_deploy | low-rank model (deploy.prototxt) | output |
-| --save_train_test | low-rank model (train_test.prototxt) | output |
-| --save_weights | low-rank model (.caffemodel)| output |
-| --config | parameter config file for BTD (.csv)| input |
-| --max_iter | Max iteration for BTD| input |
-| --min_decrease | Minimum error decrease in each iteration for BTD| input |
-| --template_deploy | template for low-rank model (deploy.prototxt) | input |
-| --template_train_test | template for low-rank model (train_test.prototxt) | input |
+| Argument | Description | Type | Required |
+| :-- | :-- | :-: | :-: |
+| --model | original model (deploy.prototxt)| input | True |
+| --weights | original model (.caffemodel) | input | True |
+| --save_deploy | low-rank model (deploy.prototxt) | output | True |
+| --save_train_test | low-rank model (train_test.prototxt) | output | True |
+| --save_weights | low-rank model (.caffemodel)| output | True |
+| --config | parameter config file for BTD (.csv)| input | True |
+| --max_iter | Max iteration for BTD| input | - |
+| --min_decrease | Minimum error decrease in each iteration for BTD| input | - |
+| --template_deploy | template for low-rank model (deploy.prototxt) | input | True |
+| --template_train_test | template for low-rank model (train_test.prototxt) | input | True |
 
 ## Parameter config file for BTD (.csv)
 ```
