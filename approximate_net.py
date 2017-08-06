@@ -11,19 +11,16 @@ from sktensor import dtensor
 from argparse import ArgumentParser
 
 
-def get_template_net(template_deploy, template_train_test):
-	# create new prototxt
-	new_deploy = caffe_pb2.NetParameter()
-	new_train_test = caffe_pb2.NetParameter()
 
-	# load template prototxt
-	with open(template_deploy) as f:
-		s = f.read()
-		txtf.Merge(s, new_deploy)
-	with open(template_train_test) as f:
-		s = f.read()
-		txtf.Merge(s, new_train_test)
-	return new_deploy, new_train_test
+# load parameters for btd
+def load_config(config_file):
+	btd_config = {}
+	with open(config_file, 'r') as f:
+		reader = csv.reader(f)
+		for row in reader:
+			param, c, n, blocks = row[0], int(row[1]), int(row[2]), int(row[3])
+			btd_config[param] = (c, n, blocks)
+	return btd_config
 
 
 def create_new_net(template_deploy, template_train_test, save_deploy, save_train_test, btd_config):
@@ -41,15 +38,19 @@ def create_new_net(template_deploy, template_train_test, save_deploy, save_train
 	return save_net
 
 
-# load parameters for btd
-def load_config(config_file):
-	btd_config = {}
-	with open(config_file, 'r') as f:
-		reader = csv.reader(f)
-		for row in reader:
-			param, c, n, blocks = row[0], int(row[1]), int(row[2]), int(row[3])
-			btd_config[param] = (c, n, blocks)
-	return btd_config
+def get_template_net(template_deploy, template_train_test):
+	# create new prototxt
+	new_deploy = caffe_pb2.NetParameter()
+	new_train_test = caffe_pb2.NetParameter()
+
+	# load template prototxt
+	with open(template_deploy) as f:
+		s = f.read()
+		txtf.Merge(s, new_deploy)
+	with open(template_train_test) as f:
+		s = f.read()
+		txtf.Merge(s, new_train_test)
+	return new_deploy, new_train_test
 
 
 def modify_convolution_num_output(new_proto, btd_config):
