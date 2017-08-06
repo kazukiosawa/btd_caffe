@@ -107,14 +107,21 @@ def create_lowrank_net(net_lowrank, net, btd_config, max_iter, min_decrease):
 
 
 def main(args):
+	if args.max_iter is None:
+		max_iter=100
+	else:
+		max_iter=int(args.max_iter)
+	if args.min_decrease is None:
+		min_decrease=1e-5
+	else:
+		min_decrease=float(args.min_decrease)
+
 	btd_config = load_config(args.config)
 	new_net = create_new_net(args.template_deploy, args.template_train_test \
-					, args.save_deploy, args.save_train_test \
-					, btd_config)
+				, args.save_deploy, args.save_train_test, btd_config)
 	# load original model
 	net = caffe.Net(args.model, args.weights, caffe.TEST)
-	net_lowrank = create_lowrank_net(new_net, net, btd_config \
-					, int(args.max_iter), float(args.min_decrease))
+	net_lowrank = create_lowrank_net(new_net, net, btd_config, max_iter, min_decrease)
 	# save low-rank model
 	print ('saving {0} ...').format(args.save_weights)
 	net_lowrank.save(args.save_weights)
@@ -125,23 +132,23 @@ if __name__ == '__main__':
     parser = ArgumentParser(description="Block Term Decomposition on Convolution Kernel")
     parser.add_argument('--model', required=True,
         help="Prototxt of the original net")
-    parser.add_argument('--weights',
+    parser.add_argument('--weights', required=True,
         help="Caffemodel of the original net")
-    parser.add_argument('--save_deploy',
+    parser.add_argument('--save_deploy', required=True,
         help="Path to the deploy.prototxt of the low-rank approximated net")
-    parser.add_argument('--save_train_test',
+    parser.add_argument('--save_train_test', required=True,
         help="Path to the deploy.prototxt of the low-rank approximated net")
-    parser.add_argument('--save_weights',
+    parser.add_argument('--save_weights', required=True,
         help="Path to the caffemodel of the low-rank approximated net")
     parser.add_argument('--config', required=True,
         help="CSV config file for BTD")
-    parser.add_argument('--max_iter', required=True,
+    parser.add_argument('--max_iter',
         help="Max iteration for BTD")
-    parser.add_argument('--min_decrease', required=True,
+    parser.add_argument('--min_decrease',
         help="Minimum error decrease in each iteration for BTD")
-    parser.add_argument('--template_deploy',
+    parser.add_argument('--template_deploy', required=True,
         help="Path to the deploy.prototxt of the template net")
-    parser.add_argument('--template_train_test',
+    parser.add_argument('--template_train_test', required=True,
         help="Path to the train_test.prototxt of the template net")
     args = parser.parse_args()
     main(args)
