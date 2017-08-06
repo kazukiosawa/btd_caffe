@@ -42,12 +42,14 @@ $ ./approximate_net.py \
 | :-- | :-- | :-: |
 | --model | original model (deploy.prototxt)| input |
 | --weights | original model (.caffemodel) | input |
-| --template_deploy | template for low-rank model (deploy.prototxt) | input |
-| --template_train_test | template for low-rank model (train_test.prototxt) | input |
 | --save_deploy | low-rank model (deploy.prototxt) | output |
 | --save_train_test | low-rank model (train_test.prototxt) | output |
 | --save_weights | low-rank model (.caffemodel)| output |
 | --config | parameter config file for BTD (.csv)| input |
+| --max_iter | Max iteration for BTD| input |
+| --min_decrease | Minimum error decrease in each iteration for BTD| input |
+| --template_deploy | template for low-rank model (deploy.prototxt) | input |
+| --template_train_test | template for low-rank model (train_test.prototxt) | input |
 
 ## Parameter config file for BTD (.csv)
 ```
