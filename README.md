@@ -25,19 +25,29 @@ Block Term Decomposition for Caffe model
 
 ## Usage
 ```sh
-$ ./start.sh
+$ ./approximate_net.py \
+         --model vgg16/deploy.prototxt \
+         --weights vgg16/vgg16.caffemodel \
+         --save_deploy vgg16/lowrank/deploy \
+         --save_train_test vgg16/lowrank/train_test \
+         --save_weights vgg16/lowrank/vgg16_lowrank.caffemodel \
+         --config config.csv \
+         --max_iter 1000 \
+         --min_decrease 1e-5 \
+         --template_deploy vgg16/lowrank/template_deploy.prototxt \
+         --template_train_test vgg16/lowrank/template_train_test.prototxt
 ```
-## Parameters for start.sh
-| Name | Description | Type |
+
+| Argument | Description | Type |
 | :-- | :-- | :-: |
-| ORIGINAL_DEPLOY | original model (deploy.prototxt)| input |
-| ORIGINAL_MODEL | original model (.caffemodel) | input |
-| TEMPLATE_DEPLOY | template for low-rank model (deploy.prototxt) | input |
-| TEMPLATE_TRAIN_TEST | template for low-rank model (train_test.prototxt) | input |
-| LOWRANK_DEPLOY | low-rank model (deploy.prototxt) | output |
-| LOWRANK_TRAIN_TEST | low-rank model (train_test.prototxt) | output |
-| LOWRANK_MODEL | low-rank model (.caffemodel)| output |
-| CONFIG | parameter config file for BTD (.csv)| input |
+| --model | original model (deploy.prototxt)| input |
+| --weights | original model (.caffemodel) | input |
+| --template_deploy | template for low-rank model (deploy.prototxt) | input |
+| --template_train_test | template for low-rank model (train_test.prototxt) | input |
+| --save_deploy | low-rank model (deploy.prototxt) | output |
+| --save_train_test | low-rank model (train_test.prototxt) | output |
+| --save_weights | low-rank model (.caffemodel)| output |
+| --config | parameter config file for BTD (.csv)| input |
 
 ## Parameter config file for BTD (.csv)
 ```
