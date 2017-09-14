@@ -89,10 +89,10 @@ def create_lowrank_net(net_lowrank, net, btd_config, max_iter, min_decrease):
 		btd, _ = pci(dtensor(kernel), blocks, rank, max_iter, min_decrease) 
 		# BTD -> (c, C) (n, c/blocks, P) (N, n)
 		kernel_a = np.c_[[subtensor[1][1] for subtensor in btd]]
-		kernel_b = np.r_[[subtensor[0] for subtensor in btd]]
-		kernel_c = np.r_[[subtensor[1][0] for subtensor in btd]]
+		kernel_b = np.r_[[subtensor[0].ttm(subtensor[1][2], 2) for subtensor in btd]]
+		kernel_c = np.c_[[subtensor[1][0] for subtensor in btd]]
 		# (c, C) -> (c, C, 1, 1)
-		kernel_a = kernel_a.reshape(c, C, 1, 1)
+		kernel_a = kernel_a.T.reshape(c, C, 1, 1)
 		# (n, c/blocks, P) -> (n, c/blocks, H, W)
 		kernel_b = kernel_b.reshape(n, c_, H, W)
 		# (N, n) -> (N, n, 1, 1)
