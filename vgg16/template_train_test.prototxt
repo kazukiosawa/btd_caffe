@@ -14,7 +14,7 @@ layer {
   }
  data_param {
     source: "/gs/hs0/tga-crest-deep/yokotaG/caffe/examples/imagenet/ilsvrc12_train_lmdb"
-    batch_size: 128
+    batch_size: 64
     backend: LMDB
   }
   top: "data"
