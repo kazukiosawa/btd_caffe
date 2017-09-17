@@ -5,13 +5,15 @@ layer {
   include {
     phase: TRAIN
   }
- transform_param {
-    scale: 0.00390625
-    mean_file: "/opt/storage/data/ilsvrc12/imagenet_mean.binaryproto"
-    mirror: true
- }
+  transform_param {
+    crop_size: 224
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
+    mirror: false
+  }
  data_param {
-    source: "/opt/storage/data/ilsvrc12/ilsvrc12_train_lmdb"
+    source: "/gs/hs0/tga-crest-deep/yokotaG/caffe/examples/imagenet/ilsvrc12_train_lmdb"
     batch_size: 128
     backend: LMDB
   }
@@ -24,10 +26,6 @@ layer {
   include {
     phase: TEST
   }
-  #transform_param {
-  #  scale: 0.00390625
-  #  mean_file: "/opt/storage/data/ilsvrc12/imagenet_mean.binaryproto"
-  #}
   transform_param {
     crop_size: 224
     mean_value: 104
@@ -36,7 +34,7 @@ layer {
     mirror: false
   }
   data_param {
-    source: "/opt/storage/data/ilsvrc12/ilsvrc12_val_lmdb"
+    source: "/gs/hs0/tga-crest-deep/yokotaG/caffe/examples/imagenet/ilsvrc12_val_lmdb"
     batch_size: 1
     backend: LMDB
   }
@@ -53,12 +51,6 @@ layer {
     pad: 1
     kernel_size: 3
   }
-  param {
-    lr_mult: 0
-  }
-  param {
-    lr_mult: 0
-  }
 }
 layer {
   name: "relu1_1"
@@ -70,57 +62,63 @@ layer {
   name: "conv1_2a"
   type: "Convolution"
   bottom: "conv1_1"
-  top: "conv1_2a"
+  top: "conv1_2"
   convolution_param {
     num_output: 64
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv1_2b"
   type: "Convolution"
-  bottom: "conv1_2a"
-  top: "conv1_2b"
+  bottom: "conv1_2"
+  top: "conv1_2"
   convolution_param {
     num_output: 64
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv1_2c"
   type: "Convolution"
-  bottom: "conv1_2b"
-  top: "conv1_2c"
+  bottom: "conv1_2"
+  top: "conv1_2"
   convolution_param {
     num_output: 64
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu1_2"
   type: "ReLU"
-  bottom: "conv1_2c"
+  bottom: "conv1_2"
   top: "conv1_2"
 }
 layer {
@@ -138,114 +136,126 @@ layer {
   name: "conv2_1a"
   type: "Convolution"
   bottom: "pool1"
-  top: "conv2_1a"
+  top: "conv2_1"
   convolution_param {
     num_output: 64
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv2_1b"
   type: "Convolution"
-  bottom: "conv2_1a"
-  top: "conv2_1b"
+  bottom: "conv2_1"
+  top: "conv2_1"
   convolution_param {
     num_output: 128
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv2_1c"
   type: "Convolution"
-  bottom: "conv2_1b"
-  top: "conv2_1c"
+  bottom: "conv2_1"
+  top: "conv2_1"
   convolution_param {
     num_output: 128
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu2_1"
   type: "ReLU"
-  bottom: "conv2_1c"
+  bottom: "conv2_1"
   top: "conv2_1"
 }
 layer {
   name: "conv2_2a"
   type: "Convolution"
   bottom: "conv2_1"
-  top: "conv2_2a"
+  top: "conv2_2"
   convolution_param {
     num_output: 128
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv2_2b"
   type: "Convolution"
-  bottom: "conv2_2a"
-  top: "conv2_2b"
+  bottom: "conv2_2"
+  top: "conv2_2"
   convolution_param {
     num_output: 128
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv2_2c"
   type: "Convolution"
-  bottom: "conv2_2b"
-  top: "conv2_2c"
+  bottom: "conv2_2"
+  top: "conv2_2"
   convolution_param {
     num_output: 128
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu2_2"
   type: "ReLU"
-  bottom: "conv2_2c"
+  bottom: "conv2_2"
   top: "conv2_2"
 }
 layer {
@@ -263,171 +273,189 @@ layer {
   name: "conv3_1a"
   type: "Convolution"
   bottom: "pool2"
-  top: "conv3_1a"
+  top: "conv3_1"
   convolution_param {
     num_output: 128
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv3_1b"
   type: "Convolution"
-  bottom: "conv3_1a"
-  top: "conv3_1b"
+  bottom: "conv3_1"
+  top: "conv3_1"
   convolution_param {
     num_output: 256
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv3_1c"
   type: "Convolution"
-  bottom: "conv3_1b"
-  top: "conv3_1c"
+  bottom: "conv3_1"
+  top: "conv3_1"
   convolution_param {
     num_output: 256
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu3_1"
   type: "ReLU"
-  bottom: "conv3_1c"
+  bottom: "conv3_1"
   top: "conv3_1"
 }
 layer {
   name: "conv3_2a"
   type: "Convolution"
   bottom: "conv3_1"
-  top: "conv3_2a"
+  top: "conv3_2"
   convolution_param {
     num_output: 256
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv3_2b"
   type: "Convolution"
-  bottom: "conv3_2a"
-  top: "conv3_2b"
+  bottom: "conv3_2"
+  top: "conv3_2"
   convolution_param {
     num_output: 256
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv3_2c"
   type: "Convolution"
-  bottom: "conv3_2b"
-  top: "conv3_2c"
+  bottom: "conv3_2"
+  top: "conv3_2"
   convolution_param {
     num_output: 256
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu3_2"
   type: "ReLU"
-  bottom: "conv3_2c"
+  bottom: "conv3_2"
   top: "conv3_2"
 }
 layer {
   name: "conv3_3a"
   type: "Convolution"
   bottom: "conv3_2"
-  top: "conv3_3a"
+  top: "conv3_3"
   convolution_param {
     num_output: 256
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv3_3b"
   type: "Convolution"
-  bottom: "conv3_3a"
-  top: "conv3_3b"
+  bottom: "conv3_3"
+  top: "conv3_3"
   convolution_param {
     num_output: 256
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv3_3c"
   type: "Convolution"
-  bottom: "conv3_3b"
-  top: "conv3_3c"
+  bottom: "conv3_3"
+  top: "conv3_3"
   convolution_param {
     num_output: 256
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu3_3"
   type: "ReLU"
-  bottom: "conv3_3c"
+  bottom: "conv3_3"
   top: "conv3_3"
 }
 layer {
@@ -445,171 +473,189 @@ layer {
   name: "conv4_1a"
   type: "Convolution"
   bottom: "pool3"
-  top: "conv4_1a"
+  top: "conv4_1"
   convolution_param {
     num_output: 256
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv4_1b"
   type: "Convolution"
-  bottom: "conv4_1a"
-  top: "conv4_1b"
+  bottom: "conv4_1"
+  top: "conv4_1"
   convolution_param {
     num_output: 512
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv4_1c"
   type: "Convolution"
-  bottom: "conv4_1b"
-  top: "conv4_1c"
+  bottom: "conv4_1"
+  top: "conv4_1"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu4_1"
   type: "ReLU"
-  bottom: "conv4_1c"
+  bottom: "conv4_1"
   top: "conv4_1"
 }
 layer {
   name: "conv4_2a"
   type: "Convolution"
   bottom: "conv4_1"
-  top: "conv4_2a"
+  top: "conv4_2"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv4_2b"
   type: "Convolution"
-  bottom: "conv4_2a"
-  top: "conv4_2b"
+  bottom: "conv4_2"
+  top: "conv4_2"
   convolution_param {
     num_output: 512
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv4_2c"
   type: "Convolution"
-  bottom: "conv4_2b"
-  top: "conv4_2c"
+  bottom: "conv4_2"
+  top: "conv4_2"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu4_2"
   type: "ReLU"
-  bottom: "conv4_2c"
+  bottom: "conv4_2"
   top: "conv4_2"
 }
 layer {
   name: "conv4_3a"
   type: "Convolution"
   bottom: "conv4_2"
-  top: "conv4_3a"
+  top: "conv4_3"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv4_3b"
   type: "Convolution"
-  bottom: "conv4_3a"
-  top: "conv4_3b"
+  bottom: "conv4_3"
+  top: "conv4_3"
   convolution_param {
     num_output: 512
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv4_3c"
   type: "Convolution"
-  bottom: "conv4_3b"
-  top: "conv4_3c"
+  bottom: "conv4_3"
+  top: "conv4_3"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu4_3"
   type: "ReLU"
-  bottom: "conv4_3c"
+  bottom: "conv4_3"
   top: "conv4_3"
 }
 layer {
@@ -627,171 +673,189 @@ layer {
   name: "conv5_1a"
   type: "Convolution"
   bottom: "pool4"
-  top: "conv5_1a"
+  top: "conv5_1"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv5_1b"
   type: "Convolution"
-  bottom: "conv5_1a"
-  top: "conv5_1b"
+  bottom: "conv5_1"
+  top: "conv5_1"
   convolution_param {
     num_output: 512
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv5_1c"
   type: "Convolution"
-  bottom: "conv5_1b"
-  top: "conv5_1c"
+  bottom: "conv5_1"
+  top: "conv5_1"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu5_1"
   type: "ReLU"
-  bottom: "conv5_1c"
+  bottom: "conv5_1"
   top: "conv5_1"
 }
 layer {
   name: "conv5_2a"
   type: "Convolution"
   bottom: "conv5_1"
-  top: "conv5_2a"
+  top: "conv5_2"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv5_2b"
   type: "Convolution"
-  bottom: "conv5_2a"
-  top: "conv5_2b"
+  bottom: "conv5_2"
+  top: "conv5_2"
   convolution_param {
     num_output: 512
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv5_2c"
   type: "Convolution"
-  bottom: "conv5_2b"
-  top: "conv5_2c"
+  bottom: "conv5_2"
+  top: "conv5_2"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu5_2"
   type: "ReLU"
-  bottom: "conv5_2c"
+  bottom: "conv5_2"
   top: "conv5_2"
 }
 layer {
   name: "conv5_3a"
   type: "Convolution"
   bottom: "conv5_2"
-  top: "conv5_3a"
+  top: "conv5_3"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv5_3b"
   type: "Convolution"
-  bottom: "conv5_3a"
-  top: "conv5_3b"
+  bottom: "conv5_3"
+  top: "conv5_3"
   convolution_param {
     num_output: 512
     pad: 1
     kernel_size: 3
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
     lr_mult: 0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "conv5_3c"
   type: "Convolution"
-  bottom: "conv5_3b"
-  top: "conv5_3c"
+  bottom: "conv5_3"
+  top: "conv5_3"
   convolution_param {
     num_output: 512
     pad: 0
     kernel_size: 1
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
   name: "relu5_3"
   type: "ReLU"
-  bottom: "conv5_3c"
+  bottom: "conv5_3"
   top: "conv5_3"
 }
 layer {
@@ -814,10 +878,12 @@ layer {
     num_output: 4096
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
@@ -844,10 +910,12 @@ layer {
     num_output: 4096
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
@@ -874,10 +942,12 @@ layer {
     num_output: 1000
   }
   param {
-    lr_mult: 0
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
 }
 layer {
