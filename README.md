@@ -24,38 +24,41 @@ Block Term Decomposition for Caffe model
   >group (g) [default 1]: If g > 1, we restrict the connectivity of each filter to a subset of the input. Specifically, the input and output channels are separated into g groups, and the iith output group channels will be only connected to the iith input group channels.
 
 ## Usage
+### Create approximated .prototxt
 ```sh
-$ ./approximate_net.py \
-         --model vgg16/deploy.prototxt \
-         --weights vgg16/vgg16.caffemodel \
-         --save_deploy vgg16/lowrank/deploy \
-         --save_train_test vgg16/lowrank/train_test \
-         --save_weights vgg16/lowrank/vgg16_lowrank.caffemodel \
+$ python approximate_net.py \
+         --netdef vgg16/deploy.prototxt \
+         --save_netdef vgg16/lowrank/deploy.prototxt \
+         --config config.csv
+```
+
+### Create approximated .prototxt & Approximate parameters  
+```sh
+$ python approximate_net.py \
+         --netdef vgg16/train_test.prototxt \
+         --save_netdef vgg16/lowrank/train_test.prototxt \
          --config config.csv \
+         --params vgg16/vgg16.caffemodel \
+         --save_params vgg16/lowrank/vgg16_lowrank.caffemodel \
          --max_iter 1000 \
-         --min_decrease 1e-5 \
-         --template_deploy vgg16/lowrank/template_deploy.prototxt \
-         --template_train_test vgg16/lowrank/template_train_test.prototxt
+         --min_decrease 1e-5 
 ```
 
 | Argument | Description | Type | Required |
 | :-- | :-- | :-: | :-: |
-| --model | original model (deploy.prototxt)| input | True |
-| --weights | original model (.caffemodel) | input | True |
-| --save_deploy | low-rank model (deploy.prototxt) | output | True |
-| --save_train_test | low-rank model (train_test.prototxt) | output | True |
-| --save_weights | low-rank model (.caffemodel)| output | True |
+| --netdef | original model (deploy.prototxt)| input | True |
+| --save_netdef | low-rank model (deploy.prototxt) | output | True |
 | --config | parameter config file for BTD (.csv)| input | True |
+| --params | original model (.caffemodel) | input | - |
+| --save_params | low-rank model (.caffemodel)| output | - |
 | --max_iter | Max iteration for BTD| input | - |
 | --min_decrease | Minimum error decrease in each iteration for BTD| input | - |
-| --template_deploy | template for low-rank model (deploy.prototxt) | input | True |
-| --template_train_test | template for low-rank model (train_test.prototxt) | input | True |
 
 ## Parameter config file for BTD (.csv)
 ```
 conv, S', T', R
 ```
-- conv : name of "Convolution" layer in prototxt
+- conv : name of "Convolution" layer in .prototxt which you want to approximate
 - S' : # of input channels
 - T' : # of output channels
 - R  : # of blocks
